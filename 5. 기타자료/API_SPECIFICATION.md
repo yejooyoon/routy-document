@@ -202,6 +202,119 @@
 
 ---
 
+---
+
+### **[POST] `/api/auth/signup` : 회원가입**
+
+> 새로운 회원을 등록합니다.
+> 
+> 회원가입 시 JWT 토큰이 자동 발급되며, claim에 userLevel이 포함됩니다. (유효기간: 24시간)
+
+---
+
+### **🛎️ Request Body**
+```json
+{
+    "userId": "testuser",
+    "userPw": "password123",
+    "userName": "홍길동",
+    "userHp": "010-1234-5678",
+    "userEmail": "test@example.com",
+    "userZip": "01217",
+    "userJibunAddr": "서울 강북구 미아동 75-304",
+    "userRoadAddr": "서울특별시 강북구 오현로6길 29",
+    "userDetailAddr": "202호호",
+    "userBirth": "1990-01-01"
+}
+```
+
+| **필드** | **타입** | **최대 길이** | **필수 / 선택** | **설명** |
+|---------|---------|-------------|--------------|---------|
+| `userId` | String | 100 | 필수 | 사용자 아이디 |
+| `userPw` | String | 255 | 필수 | 비밀번호 |
+| `userName` | String | 50 | 필수 | 사용자 이름 |
+| `userHp` | String | 20 | 필수 | 전화번호 |
+| `userEmail` | String | 100 | 필수 | 이메일 |
+| `userZip` | String | 10 | 필수 | 우편번호 |
+| `userJibunAddr` | String | 255 | 필수 | 지번 주소 |
+| `userRoadAddr` | String | 255 | 필수 | 도로명 주소 |
+| `userDetailAddr` | String | 255 | 필수 | 상세 주소 |
+| `userBirth` | String | 10 | 선택 | 생년월일 (YYYY-MM-DD) |
+
+---
+
+### **💬 Response Example**
+```json
+{
+    "resultCode": 200,
+    "resultMsg": "SUCCESS",
+    "resultTime": "2025-11-30 10:00:00",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "userId": "testuser",
+        "userName": "홍길동",
+        "userLevel": 1
+    }
+}
+```
+
+| **필드** | **타입** | **설명** |
+|---------|---------|---------|
+| `token` | String | JWT 토큰 (userLevel claim 포함, 24시간 유효) |
+| `userId` | String | 사용자 아이디 |
+| `userName` | String | 사용자 이름 |
+| `userLevel` | Integer | 사용자 등급 (1: 일반회원, 2: VIP, 3: 관리자) |
+
+---
+
+### **[POST] `/api/auth/login` : 로그인**
+
+> 아이디와 비밀번호로 로그인합니다.
+> 
+> 로그인 성공 시 JWT 토큰이 발급되며, claim에 userLevel이 포함됩니다. (유효기간: 24시간)
+
+---
+
+### **🛎️ Request Body**
+```json
+{
+    "userId": "testuser",
+    "userPw": "password123"
+}
+```
+
+| **필드** | **타입** | **최대 길이** | **필수 / 선택** | **설명** |
+|---------|---------|-------------|--------------|---------|
+| `userId` | String | 100 | 필수 | 사용자 아이디 |
+| `userPw` | String | 255 | 필수 | 비밀번호 |
+
+---
+
+### **💬 Response Example**
+```json
+{
+    "resultCode": 200,
+    "resultMsg": "SUCCESS",
+    "resultTime": "2025-11-30 10:05:00",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "userId": "testuser",
+        "userName": "홍길동",
+        "userLevel": 1
+    }
+}
+```
+
+| **필드** | **타입** | **설명** |
+|---------|---------|---------|
+| `token` | String | JWT 토큰 (userLevel claim 포함, 24시간 유효) |
+| `userId` | String | 사용자 아이디 |
+| `userName` | String | 사용자 이름 |
+| `userLevel` | Integer | 사용자 등급 (1: 일반회원, 2: VIP, 3: 관리자) |
+
+---
+
+
 ## 3.2. 상품
 
 ### [GET] `/api/products` : 상품 목록 조회
